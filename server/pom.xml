@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.HbotondS.client</groupId>
-    <artifactId>client</artifactId>
+    <groupId>com.HbotondS.server</groupId>
+    <artifactId>server</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -20,10 +20,10 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.4.0</version>
                 <configuration>
-                    <mainClass>com.HbotondS.client.Main</mainClass>
+                    <mainClass>com.HbotondS.server.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-    
+
 </project>
