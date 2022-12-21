@@ -2,6 +2,7 @@ package com.HbotondS.server.Server;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -11,6 +12,7 @@ public class Server {
     private Socket socket = null;
     private ServerSocket server = null;
     private DataInputStream in = null;
+    private DataOutputStream out = null;
 
     public Server(int port) {
         this.port = port;
@@ -44,15 +46,20 @@ public class Server {
 
         try {
             in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+            out = new DataOutputStream(socket.getOutputStream());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        String line = "";
-
-        while (!line.equals("over")) {
+        var line = "";
+        while (true) {
             try {
                 line = in.readUTF();
-                System.out.println(line);
+                if (line.equals("over")) {
+                    break;
+                } else {
+                    System.out.println(line);
+                    out.writeUTF("".concat("out: ").concat(line));
+                }
             }
             catch(IOException e) {
                 System.out.println(e.getMessage());

@@ -1,16 +1,24 @@
 package com.HbotondS.client.Client;
 
+import com.HbotondS.client.Promise.Promise;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Client {
     private final String address;
     private final int port;
     private Socket socket = null;
-    private DataInputStream input = null;
+    private BufferedReader in = null;
     private DataOutputStream out = null;
+    private DataInputStream inout = null;
 
     public Client(String address, int port) {
         this.address = address;
@@ -33,27 +41,35 @@ public class Client {
         }
         System.out.println("Connected");
 
-        input = new DataInputStream(System.in);
+        in = new BufferedReader(new InputStreamReader(System.in));
 
         try {
             out = new DataOutputStream(socket.getOutputStream());
+            inout = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     private void communicate() {
-        String line = "";
-
-        while (!line.equals("over"))
-        {
-            try
-            {
-                line = input.readLine();
+        var line = "";
+        final var executor = Executors.newCachedThreadPool();
+        while (true) {
+            try {
+                line = in.readLine();
                 out.writeUTF(line);
+                if (line.equals("over")) {
+                    break;
+                } else {
+                    new Promise<String>()
+                            .fulfillAsync(() -> inout.readUTF(), executor)
+                            .thenAccept((out) -> {
+                                System.out.println(out);
+                                executor.shutdown();
+                            });
+                }
             }
-            catch(IOException e)
-            {
+            catch(IOException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -63,7 +79,7 @@ public class Client {
         System.out.println("Disconnected");
         try
         {
-            input.close();
+            in.close();
             out.close();
             socket.close();
         }
