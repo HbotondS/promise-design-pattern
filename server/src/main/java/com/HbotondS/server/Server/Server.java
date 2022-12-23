@@ -57,8 +57,18 @@ public class Server {
                 if (line.equals("over")) {
                     break;
                 } else {
-                    System.out.println(line);
-                    out.writeUTF("".concat("out: ").concat(line));
+                    String finalLine = line;
+                    new Thread(() -> {
+                        var sleepTime = Math.floor(Math.random() * 10000);
+                        System.out.println(sleepTime);
+                        try {
+                            Thread.sleep((long) sleepTime);
+                            System.out.println(finalLine);
+                            out.writeUTF("".concat("out: ").concat(finalLine));
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }).start();
                 }
             }
             catch(IOException e) {

@@ -53,7 +53,6 @@ public class Client {
 
     private void communicate() {
         var line = "";
-        final var executor = Executors.newCachedThreadPool();
         while (true) {
             try {
                 line = in.readLine();
@@ -61,6 +60,7 @@ public class Client {
                 if (line.equals("over")) {
                     break;
                 } else {
+                    final var executor = Executors.newFixedThreadPool(2);
                     new Promise<String>()
                             .fulfillAsync(() -> inout.readUTF(), executor)
                             .thenAccept((out) -> {
