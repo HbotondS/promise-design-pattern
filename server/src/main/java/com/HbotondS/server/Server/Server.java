@@ -60,10 +60,12 @@ public class Server {
                     String finalLine = line;
                     new Thread(() -> {
                         var sleepTime = Math.floor(Math.random() * 10000);
-                        System.out.println(sleepTime);
+                        System.out.println(finalLine
+                                .concat(" waits: ")
+                                .concat(Double.toString(sleepTime))
+                        );
                         try {
                             Thread.sleep((long) sleepTime);
-                            System.out.println(finalLine);
                             out.writeUTF("".concat("out: ").concat(finalLine));
                         } catch (Exception e) {
                             System.out.println(e.getMessage());
