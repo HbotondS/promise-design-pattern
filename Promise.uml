@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.HbotondS.client.Promise</OriginalElement>
+  <nodes>
+    <node x="-77.75771414402263" y="-14.602702154703366">com.HbotondS.client.Promise.PromiseSupport</node>
+    <node x="-92.02540064060905" y="299.5249332320327">com.HbotondS.client.Promise.PromiseState</node>
+    <node x="172.53896731311494" y="187.4211747836418">com.HbotondS.client.Promise.Promise</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.HbotondS.client.Promise.Promise" target="com.HbotondS.client.Promise.PromiseSupport" relationship="GENERALIZATION">
+      <point x="-150.0" y="-39.023876938345154" />
+      <point x="94.0" y="119.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="190.0" y="214.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
